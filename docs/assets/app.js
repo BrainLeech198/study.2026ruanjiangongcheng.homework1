@@ -11,7 +11,7 @@ const TWIN_PROFILE = {
   identity: "大学生、独立学习者",
   doing: "学习制作 AI 产品，整理自己的作品集",
   skills: "AI 应用、编程、设计，以及把复杂问题讲清楚",
-  contact: "可以发邮件到 hello@example.com，或者去 GitHub / Gitee 找我",
+  contact: "可以发邮件到 brainleech198@foxmail.com，或者去 GitHub / Gitee 找我",
 };
 
 /* 预设问答：matches 里任意关键词命中即算匹配 */

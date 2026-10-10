@@ -28,7 +28,7 @@
 │  └─ assets/
 │     ├─ styles.css      # 深色科技感样式
 │     ├─ app.js          # 交互 + 数字分身逻辑
-│     ├─ avatar.svg      # 头像占位（可替换为真实照片）
+│     ├─ avatar.png      # 头像（替换成你自己的照片即可）
 │     └─ favicon.svg     # 站点图标
 ├─ README.md
 └─ .gitignore
@@ -54,9 +54,8 @@ python -m http.server 8080
 
 占位信息集中在几处，替换即可：
 
-1. **主页文案**：编辑 `docs/index.html`，搜索 `BrainLeech`、`hello@example.com`、占位介绍文字。
-2. **头像**：把你的照片命名为 `avatar.jpg` 放进 `docs/assets/`，再把 `index.html` 里两处
-   `assets/avatar.svg` 改成 `assets/avatar.jpg`。
+1. **主页文案**：编辑 `docs/index.html`，搜索 `BrainLeech`、`brainleech198@foxmail.com`、占位介绍文字。
+2. **头像**：把你的照片命名为 `avatar.png` 覆盖 `docs/assets/avatar.png` 即可（无需改代码）。
 3. **数字分身内容**：编辑 `docs/assets/app.js` 顶部的 `TWIN_PROFILE`、`TWIN_QA`、`QUICK_CHIPS`
    三个常量，就能改人设、改问答、改快捷问题。
 4. **社交链接**：`index.html` 里的 GitHub / Gitee / 邮箱链接换成你自己的。
