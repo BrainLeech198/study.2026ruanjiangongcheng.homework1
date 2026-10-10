@@ -369,6 +369,378 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* ---------------------------------------------------------
+     Lightbox（作品封面点击放大）
+     --------------------------------------------------------- */
+  const lightbox = $("#lightbox");
+  const lightboxArt = $("#lightboxArt");
+  const lightboxTitle = $("#lightboxTitle");
+  const lightboxText = $("#lightboxText");
+  const LIGHTBOX_DATA = [
+    {
+      art: "Claude",
+      cls: "work-card__cover--1",
+      title: "Claude 启动器",
+      text: "Windows 上 Claude Code 的图形启动器：工作区管理、一键切换模型、跨工具共享记忆、权限等级与 AI 托管，纯 Python 标准库实现，可打包成免安装的安装程序。独立开发 · 桌面工具 · 2026。",
+    },
+    {
+      art: "Twin",
+      cls: "work-card__cover--2",
+      title: "个人主页 + 数字分身",
+      text: "用 AI 从零生成的第一个作品，从平台原型到本地、再到上线，走完一次完整闭环。你现在正在看的这个页面就是它。独立开发 · 全栈小品 · 2026。",
+    },
+    {
+      art: "Soon",
+      cls: "work-card__cover--3",
+      title: "更多作品整理中",
+      text: "这里会陆续放上新的小工具和实验记录，敬请期待。持续更新 · 2026。",
+    },
+  ];
+
+  function openLightbox(idx) {
+    const d = LIGHTBOX_DATA[idx];
+    if (!d || !lightbox) return;
+    lightboxArt.textContent = d.art;
+    lightboxArt.className = "lightbox__art " + d.cls;
+    lightboxTitle.textContent = d.title;
+    lightboxText.textContent = d.text;
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  $$("[data-lightbox]").forEach((el) => {
+    const idx = Number(el.getAttribute("data-lightbox"));
+    el.addEventListener("click", () => openLightbox(idx));
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openLightbox(idx);
+      }
+    });
+  });
+  if (lightbox) {
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    $("#lightboxClose")?.addEventListener("click", closeLightbox);
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeLightbox();
+    });
+  }
+
+  /* ---------------------------------------------------------
+     游戏 1 · 乒乓弹球（Canvas 物理）
+     --------------------------------------------------------- */
+  const pongCanvas = $("#pongCanvas");
+  if (pongCanvas) {
+    const ctx = pongCanvas.getContext("2d");
+    const W = pongCanvas.width;
+    const H = pongCanvas.height;
+    const overlay = $("#pongOverlay");
+    const scoreEl = $("#pongScore");
+    const bestEl = $("#pongBest");
+    const bestKey = "pongBest";
+
+    const state = {
+      running: false,
+      score: 0,
+      best: Number(localStorage.getItem(bestKey) || 0),
+      ball: { x: W / 2, y: H / 2, vx: 3.2, vy: -3.2, r: 6 },
+      paddle: { x: W / 2, w: 72, h: 9 },
+    };
+    bestEl.textContent = state.best;
+
+    function resetBall() {
+      state.ball.x = W / 2;
+      state.ball.y = H / 2;
+      const angle = (-Math.PI / 3) * (0.6 + Math.random() * 0.4);
+      const speed = 3.4 + state.score * 0.08;
+      state.ball.vx = Math.cos(angle) * speed * (Math.random() > 0.5 ? 1 : -1);
+      state.ball.vy = Math.sin(angle) * speed;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      // 台面
+      ctx.fillStyle = "rgba(255,255,255,0.03)";
+      ctx.fillRect(0, 0, W, H);
+      ctx.strokeStyle = "rgba(255,255,255,0.08)";
+      ctx.setLineDash([4, 6]);
+      ctx.beginPath();
+      ctx.moveTo(0, H * 0.42);
+      ctx.lineTo(W, H * 0.42);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // 球拍
+      const p = state.paddle;
+      const px = Math.max(0, Math.min(W - p.w, p.x - p.w / 2));
+      const grad = ctx.createLinearGradient(px, H - 22, px + p.w, H - 22);
+      grad.addColorStop(0, "#22d3ee");
+      grad.addColorStop(1, "#5b8cff");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.roundRect(px, H - 22, p.w, p.h, 5);
+      ctx.fill();
+      // 球
+      const b = state.ball;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fillStyle = "#fff";
+      ctx.shadowColor = "rgba(91,140,255,0.9)";
+      ctx.shadowBlur = 14;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    function step() {
+      if (!state.running) return;
+      const b = state.ball;
+      const p = state.paddle;
+      b.x += b.vx;
+      b.y += b.vy;
+      // 左右墙
+      if (b.x < b.r) { b.x = b.r; b.vx *= -1; }
+      if (b.x > W - b.r) { b.x = W - b.r; b.vx *= -1; }
+      // 顶
+      if (b.y < b.r) { b.y = b.r; b.vy *= -1; }
+      // 球拍
+      const px = Math.max(0, Math.min(W - p.w, p.x - p.w / 2));
+      if (
+        b.vy > 0 &&
+        b.y + b.r >= H - 22 &&
+        b.y - b.r <= H - 22 + p.h &&
+        b.x >= px - b.r &&
+        b.x <= px + p.w + b.r
+      ) {
+        // 击中位置 → 反弹角（物理沙盒核心）
+        const hit = (b.x - (px + p.w / 2)) / (p.w / 2); // -1 ~ 1
+        const angle = hit * (Math.PI / 3); // 最大 60°
+        const speed = Math.min(8.5, Math.hypot(b.vx, b.vy) * 1.04 + 0.06);
+        b.vx = Math.sin(angle) * speed;
+        b.vy = -Math.abs(Math.cos(angle) * speed);
+        b.y = H - 22 - b.r;
+        state.score += 1;
+        scoreEl.textContent = state.score;
+      }
+      // 底 → 结束
+      if (b.y > H + 12) {
+        state.running = false;
+        if (state.score > state.best) {
+          state.best = state.score;
+          localStorage.setItem(bestKey, String(state.best));
+          bestEl.textContent = state.best;
+        }
+        overlay.classList.remove("is-hidden");
+        overlay.querySelector("p").textContent = "本局得分 " + state.score;
+        overlay.querySelector("button").textContent = "再来一局";
+      }
+      draw();
+      if (state.running) requestAnimationFrame(step);
+    }
+
+    function startPong() {
+      state.score = 0;
+      scoreEl.textContent = "0";
+      resetBall();
+      state.running = true;
+      overlay.classList.add("is-hidden");
+      requestAnimationFrame(step);
+    }
+
+    $("#pongStart")?.addEventListener("click", startPong);
+    $("#pongReset")?.addEventListener("click", () => {
+      state.running = false;
+      startPong();
+    });
+
+    const movePaddle = (clientX) => {
+      const r = pongCanvas.getBoundingClientRect();
+      state.paddle.x = ((clientX - r.left) / r.width) * W;
+    };
+    pongCanvas.addEventListener("pointermove", (e) => movePaddle(e.clientX));
+    pongCanvas.addEventListener("pointerdown", (e) => {
+      movePaddle(e.clientX);
+      if (!state.running) startPong();
+    });
+
+    draw();
+  }
+
+  /* ---------------------------------------------------------
+     游戏 2 · 反应力测试
+     --------------------------------------------------------- */
+  const reaction = $("#reaction");
+  if (reaction) {
+    const label = $("#reactionLabel");
+    const value = $("#reactionValue");
+    const hint = $("#reactionHint");
+    let state = "idle";
+    let timer = null;
+    let goAt = 0;
+
+    const setState = (s) => {
+      state = s;
+      reaction.dataset.state = s;
+    };
+
+    function startReaction() {
+      clearTimeout(timer);
+      setState("waiting");
+      label.textContent = "等变绿…";
+      value.textContent = "";
+      hint.textContent = "别急，变绿再点";
+      timer = setTimeout(() => {
+        setState("go");
+        goAt = performance.now();
+        label.textContent = "点！";
+        hint.textContent = "就是现在";
+      }, 1200 + Math.random() * 2600);
+    }
+
+    function finishReaction() {
+      const ms = Math.round(performance.now() - goAt);
+      setState("result");
+      value.textContent = ms + " ms";
+      let rating = "还可以";
+      if (ms < 200) rating = "闪电手！";
+      else if (ms < 280) rating = "比 87% 的人快";
+      else if (ms < 380) rating = "中等偏上";
+      label.textContent = rating;
+      hint.textContent = "再测一次，看看能不能更快";
+    }
+
+    function onReact() {
+      if (state === "idle" || state === "result" || state === "early") {
+        startReaction();
+      } else if (state === "waiting") {
+        clearTimeout(timer);
+        setState("early");
+        label.textContent = "抢跑啦！";
+        value.textContent = "";
+        hint.textContent = "还没变绿就点了，再试一次";
+      } else if (state === "go") {
+        finishReaction();
+      }
+    }
+
+    reaction.addEventListener("click", onReact);
+    reaction.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        onReact();
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     游戏 3 · 猜猜我是谁
+     --------------------------------------------------------- */
+  const quizBody = $("#quizBody");
+  if (quizBody) {
+    const quizBar = $("#quizBar");
+    const QUESTIONS = [
+      {
+        q: "Mr. 赖 现在主要在学什么？",
+        opts: ["AI 开发", "建筑设计", "影视后期", "金融工程"],
+        a: 0,
+        note: "方向是 AI 开发和游戏开发，比起背概念更喜欢动手做出来。",
+      },
+      {
+        q: "他接下来打算学哪个游戏引擎？",
+        opts: ["Unity", "Unreal", "Godot", "Cocos"],
+        a: 2,
+        note: "准备用 Godot 做一些休闲治愈风格的小游戏。",
+      },
+      {
+        q: "以下哪个是他的开源作品？",
+        opts: ["Claude 启动器", "某购物 App", "某外卖平台", "某社交软件"],
+        a: 0,
+        note: "Claude 启动器：Windows 上 Claude Code 的图形启动器，纯 Python 写的。",
+      },
+      {
+        q: "他业余喜欢做什么运动？",
+        opts: ["篮球", "乒乓球", "游泳", "跑步"],
+        a: 1,
+        note: "打乒乓球、打 CS，还喜欢用物理沙盒模拟乒乓球。",
+      },
+      {
+        q: "想联系他，最直接的方式是？",
+        opts: ["发邮件到 brainleech198@foxmail.com", "去微博私信", "打 114 查号", "在游戏里蹲他"],
+        a: 0,
+        note: "邮件最稳；也可以去 GitHub / Gitee 找他。",
+      },
+    ];
+
+    let qi = 0;
+    let score = 0;
+
+    function renderQuiz() {
+      if (qi >= QUESTIONS.length) {
+        quizBar.style.width = "100%";
+        const pct = score / QUESTIONS.length;
+        let comment = "";
+        if (pct === 1) comment = "全对！你简直比数字分身还了解我 🎉";
+        else if (pct >= 0.6) comment = "了解得不少！还有几道题可以去问数字分身补补课。";
+        else comment = "看来还不够熟～去右边和数字分身聊聊，再来挑战一次吧。";
+        quizBody.innerHTML =
+          '<div class="quiz__result">' +
+          '<div class="quiz__score">' + score + " / " + QUESTIONS.length + "</div>" +
+          '<p class="quiz__comment">' + comment + "</p>" +
+          '<button class="game-btn quiz__restart" id="quizRestart" type="button">再玩一次</button>' +
+          "</div>";
+        $("#quizRestart")?.addEventListener("click", () => {
+          qi = 0;
+          score = 0;
+          quizBar.style.width = "0%";
+          renderQuiz();
+        });
+        return;
+      }
+
+      const item = QUESTIONS[qi];
+      quizBar.style.width = (qi / QUESTIONS.length) * 100 + "%";
+      quizBody.innerHTML =
+        '<div class="quiz__q">' + (qi + 1) + ". " + item.q + "</div>" +
+        '<div class="quiz__opts"></div>' +
+        '<div class="quiz__feedback" id="quizFeedback"></div>';
+      const optsBox = quizBody.querySelector(".quiz__opts");
+      const feedback = quizBody.querySelector("#quizFeedback");
+
+      item.opts.forEach((opt, i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "quiz__opt";
+        b.textContent = opt;
+        b.addEventListener("click", () => {
+          optsBox.querySelectorAll(".quiz__opt").forEach((x) => (x.disabled = true));
+          const btns = [...optsBox.querySelectorAll(".quiz__opt")];
+          btns[item.a].classList.add("is-correct");
+          if (i === item.a) {
+            score += 1;
+            feedback.textContent = "答对了！" + item.note;
+          } else {
+            b.classList.add("is-wrong");
+            feedback.textContent = "答错了～" + item.note + " 不清楚的话，去问数字分身吧。";
+          }
+          setTimeout(() => {
+            qi += 1;
+            renderQuiz();
+          }, 1400);
+        });
+        optsBox.appendChild(b);
+      });
+    }
+
+    renderQuiz();
+  }
+
   /* 暴露给控制台调试用 */
   window.appChat = send;
 });

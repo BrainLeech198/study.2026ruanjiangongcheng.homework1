@@ -56,6 +56,7 @@
       <a href="#about" data-nav>关于</a>
       <a href="#now" data-nav>动态</a>
       <a href="#works" data-nav>作品</a>
+      <a href="#play" data-nav>玩一玩</a>
       <a href="#twin" data-nav>数字分身</a>
       <a href="#contact" data-nav>联系</a>
     </nav>
@@ -70,6 +71,7 @@
     <a href="#about">关于我</a>
     <a href="#now">最近在做</a>
     <a href="#works">作品</a>
+    <a href="#play">玩一玩</a>
     <a href="#twin">数字分身</a>
     <a href="#contact">联系</a>
     <a class="btn btn--primary" href="#twin">和我聊聊</a>
@@ -193,6 +195,18 @@
         </div>
       </div>
 
+      <details class="accordion reveal">
+        <summary>
+          <span>更多细节 · 学习方式 / 接下来 / 合作</span>
+          <svg class="accordion__chevron" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+        </summary>
+        <div class="accordion__panel">
+          <p><strong>学习方式：</strong>比起一口气学完所有概念，我更相信「先做出来，再逐步理解」——先拉起一个能预览、能用的版本，再一点点改得更像自己想要的样子。</p>
+          <p><strong>接下来：</strong>上手 Godot，做几款休闲治愈风格的小游戏；继续把 AI 接进自己的项目里。</p>
+          <p><strong>合作意向：</strong>欢迎交流独立开发、AI 工具、游戏设计；想找人一起折腾点好玩的也随时喊我。</p>
+        </div>
+      </details>
+
       <div class="tags reveal">
         <span>AI 开发</span>
         <span>Godot</span>
@@ -277,10 +291,15 @@
       <div class="works">
         <article class="work-card reveal">
           <div class="work-card__glow"></div>
+          <div class="work-card__cover work-card__cover--1" data-lightbox="0" role="button" tabindex="0" aria-label="放大查看 Claude 启动器">
+            <div class="work-card__cover-art">Claude</div>
+            <span class="work-card__cover-hint">点击查看大图</span>
+          </div>
           <div class="work-card__top">
             <span class="work-card__badge">Windows</span>
             <span class="work-card__year">2026</span>
           </div>
+          <span class="work-card__role">独立开发 · 桌面工具</span>
           <h3>Claude 启动器</h3>
           <p>
             Windows 上 Claude Code 的图形启动器：工作区管理、一键切换模型、跨工具共享记忆、
@@ -296,10 +315,15 @@
 
         <article class="work-card reveal">
           <div class="work-card__glow"></div>
+          <div class="work-card__cover work-card__cover--2" data-lightbox="1" role="button" tabindex="0" aria-label="放大查看 个人主页 + 数字分身">
+            <div class="work-card__cover-art">Twin</div>
+            <span class="work-card__cover-hint">点击查看大图</span>
+          </div>
           <div class="work-card__top">
             <span class="work-card__badge">Web</span>
             <span class="work-card__year">2026</span>
           </div>
+          <span class="work-card__role">独立开发 · 全栈小品</span>
           <h3>个人主页 + 数字分身</h3>
           <p>用 AI 从零生成的第一个作品，从平台原型到本地、再到上线，走完一次完整闭环。</p>
           <div class="work-card__tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
@@ -310,10 +334,15 @@
 
         <article class="work-card work-card--soon reveal">
           <div class="work-card__glow"></div>
+          <div class="work-card__cover work-card__cover--3" data-lightbox="2" role="button" tabindex="0" aria-label="放大查看 更多作品">
+            <div class="work-card__cover-art">Soon</div>
+            <span class="work-card__cover-hint">点击查看大图</span>
+          </div>
           <div class="work-card__top">
             <span class="work-card__badge">Soon</span>
             <span class="work-card__year">2026</span>
           </div>
+          <span class="work-card__role">持续更新</span>
           <h3>更多作品整理中</h3>
           <p>这里会陆续放上新的小工具和实验记录，敬请期待。</p>
           <div class="work-card__tags"><span>持续更新</span></div>
@@ -321,10 +350,77 @@
       </div>
     </section>
 
+    <!-- 玩一玩 -->
+    <section class="section" id="play">
+      <div class="section__head reveal">
+        <span class="section__label">04 — 玩一玩</span>
+        <h2 class="section__title">来玩两把小游戏</h2>
+        <p class="section__sub">都是我自己写的，直接在页面上玩，不用下载也不跳转。</p>
+      </div>
+
+      <div class="play-grid">
+        <!-- 乒乓弹球 -->
+        <article class="game-card reveal">
+          <div class="game-card__head">
+            <span class="info-card__icon">🏓</span>
+            <h3>乒乓弹球</h3>
+          </div>
+          <p class="game-card__desc">球拍跟鼠标走，击中球拍的位置不同，反弹角也不同——就是物理沙盒那套玩法。</p>
+          <div class="game-card__stage">
+            <div class="pong-hud">
+              <span>得分 <strong id="pongScore">0</strong></span>
+              <span>最佳 <strong id="pongBest">0</strong></span>
+              <button class="game-btn game-btn--ghost" id="pongReset" type="button" style="padding:4px 12px;font-size:12px">重开</button>
+            </div>
+            <canvas class="pong-canvas" id="pongCanvas" width="360" height="220" aria-label="乒乓弹球游戏区"></canvas>
+            <div class="pong-overlay" id="pongOverlay">
+              <div style="text-align:center">
+                <p style="font-weight:700;margin-bottom:12px">点击开始</p>
+                <button class="game-btn" id="pongStart" type="button">开球</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 反应力测试 -->
+        <article class="game-card reveal">
+          <div class="game-card__head">
+            <span class="info-card__icon">⚡</span>
+            <h3>反应力测试</h3>
+          </div>
+          <p class="game-card__desc">屏幕变绿的一瞬间点下去，测测你的反应有多快。别抢跑哦。</p>
+          <div class="game-card__stage">
+            <div class="reaction" id="reaction" data-state="idle" role="button" tabindex="0" aria-label="反应力测试区">
+              <div>
+                <div class="reaction__label" id="reactionLabel">点击开始</div>
+                <div class="reaction__value" id="reactionValue"></div>
+                <div class="reaction__hint" id="reactionHint">变绿立刻点，看你的手速</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 猜猜我是谁 -->
+        <article class="game-card reveal">
+          <div class="game-card__head">
+            <span class="info-card__icon">🎯</span>
+            <h3>猜猜我是谁</h3>
+          </div>
+          <p class="game-card__desc">5 道题，看看你对 Mr. 赖了解多少。答错的题，可以去问数字分身。</p>
+          <div class="game-card__stage">
+            <div class="quiz" id="quiz">
+              <div class="quiz__progress"><div class="quiz__bar" id="quizBar"></div></div>
+              <div id="quizBody"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- 数字分身 -->
     <section class="section" id="twin">
       <div class="section__head reveal">
-        <span class="section__label">04 — 数字分身</span>
+        <span class="section__label">05 — 数字分身</span>
         <h2 class="section__title">有任何问题，直接问我</h2>
         <p class="section__sub">这是根据我的资料生成的对话分身，在学什么、做什么游戏、平时玩什么，都可以随便问。</p>
       </div>
@@ -370,7 +466,7 @@
   <!-- 页脚 / 联系 -->
   <footer class="footer" id="contact">
     <div class="footer__inner reveal">
-      <span class="section__label">05 — 联系</span>
+      <span class="section__label">06 — 联系</span>
       <h2 class="footer__title">想聊点什么，随时找我</h2>
       <p class="footer__sub">无论是合作、交流，还是单纯想认识一下，都欢迎。</p>
 
@@ -390,6 +486,18 @@
   <button class="to-top" id="toTop" type="button" aria-label="回到顶部">
     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M6 11l6-6 6 6"/></svg>
   </button>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="lightbox__card">
+      <button class="lightbox__close" id="lightboxClose" type="button" aria-label="关闭">×</button>
+      <div class="lightbox__art" id="lightboxArt"></div>
+      <div class="lightbox__body">
+        <h3 id="lightboxTitle"></h3>
+        <p id="lightboxText"></p>
+      </div>
+    </div>
+  </div>
 
   <script src="assets/app.js"></script>
 </body>
