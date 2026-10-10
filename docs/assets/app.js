@@ -294,6 +294,83 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
+  /* --- 阅读进度条 --- */
+  const progress = $("#progress");
+  if (progress) {
+    const updateProgress = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+      progress.style.width = Math.min(100, Math.max(0, p)) + "%";
+    };
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+  }
+
+  /* --- 回到顶部 --- */
+  const toTop = $("#toTop");
+  if (toTop) {
+    const onScrollTop = () => toTop.classList.toggle("is-show", window.scrollY > 620);
+    onScrollTop();
+    window.addEventListener("scroll", onScrollTop, { passive: true });
+    toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  }
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* --- 首屏打字机 --- */
+  const typer = $("#typer");
+  if (typer) {
+    const words = ["AI 开发", "游戏开发", "独立小工具", "物理沙盒实验", "Godot 游戏"];
+    if (reduceMotion) {
+      typer.textContent = words[0];
+    } else {
+      let wi = 0, ci = 0, deleting = false;
+      const tick = () => {
+        const w = words[wi];
+        ci += deleting ? -1 : 1;
+        typer.textContent = w.slice(0, ci);
+        let delay = deleting ? 45 : 95;
+        if (!deleting && ci === w.length) { deleting = true; delay = 1400; }
+        else if (deleting && ci === 0) { deleting = false; wi = (wi + 1) % words.length; delay = 350; }
+        setTimeout(tick, delay);
+      };
+      tick();
+    }
+  }
+
+  /* --- 关键词跑马灯：复制一份实现无缝滚动 --- */
+  const marqueeTrack = $("#marqueeTrack");
+  if (marqueeTrack) marqueeTrack.innerHTML += marqueeTrack.innerHTML;
+
+  /* --- 作品卡片：跟随光标高光 + 3D 倾斜 --- */
+  if (window.matchMedia("(pointer:fine)").matches && !reduceMotion) {
+    $$(".work-card").forEach((card) => {
+      card.classList.add("is-tilt");
+      let raf = null;
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+        card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const rx = ((0.5 - py) * 7).toFixed(2);
+          const ry = ((px - 0.5) * 9).toFixed(2);
+          card.style.transform =
+            "perspective(800px) translateY(-6px) rotateX(" + rx + "deg) rotateY(" + ry + "deg)";
+          raf = null;
+        });
+      });
+      card.addEventListener("pointerleave", () => {
+        card.style.transform = "";
+        card.style.setProperty("--mx", "50%");
+        card.style.setProperty("--my", "0%");
+      });
+    });
+  }
+
   /* 暴露给控制台调试用 */
   window.appChat = send;
 });

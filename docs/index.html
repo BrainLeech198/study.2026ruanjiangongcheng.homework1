@@ -43,6 +43,9 @@
   <!-- 跟随鼠标的光斑 -->
   <div class="spotlight" id="spotlight" aria-hidden="true"></div>
 
+  <!-- 阅读进度条 -->
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
   <!-- 顶部导航 -->
   <header class="nav" id="nav">
     <a class="nav__logo" href="#home" aria-label="返回首页">
@@ -51,6 +54,7 @@
     </a>
     <nav class="nav__links" aria-label="主导航">
       <a href="#about" data-nav>关于</a>
+      <a href="#now" data-nav>动态</a>
       <a href="#works" data-nav>作品</a>
       <a href="#twin" data-nav>数字分身</a>
       <a href="#contact" data-nav>联系</a>
@@ -64,6 +68,7 @@
   <!-- 移动端菜单 -->
   <div class="nav__menu" id="navMenu">
     <a href="#about">关于我</a>
+    <a href="#now">最近在做</a>
     <a href="#works">作品</a>
     <a href="#twin">数字分身</a>
     <a href="#contact">联系</a>
@@ -88,6 +93,9 @@
           <span class="grad-text">Mr. 赖</span>
         </h1>
         <p class="hero__tagline">正在学习 AI 开发，也爱自己动手做游戏和小工具的独立开发者</p>
+        <p class="hero__typed">
+          我在做 <span class="typer" id="typer"></span><span class="typer__caret" aria-hidden="true"></span>
+        </p>
         <p class="hero__desc">
           平时用 AI 写小工具、设计游戏框架，也玩乒乓球和 CS；喜欢把复杂的问题讲成人话，
           用最少的资源，把想法变成一个能跑、能看、能用的作品。
@@ -118,6 +126,22 @@
         <span class="scroll-hint__mouse"></span>
       </a>
     </section>
+
+    <!-- 关键词跑马灯 -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" id="marqueeTrack">
+        <span class="marquee__item">AI 开发</span>
+        <span class="marquee__item">游戏框架设计</span>
+        <span class="marquee__item">Godot</span>
+        <span class="marquee__item">物理沙盒</span>
+        <span class="marquee__item">Python 小工具</span>
+        <span class="marquee__item">快速原型</span>
+        <span class="marquee__item">乒乓球</span>
+        <span class="marquee__item">CS</span>
+        <span class="marquee__item">和 AI 一起折腾</span>
+        <span class="marquee__item">开源作品</span>
+      </div>
+    </div>
 
     <!-- 关于我 -->
     <section class="section" id="about">
@@ -185,10 +209,67 @@
       </div>
     </section>
 
+    <!-- 最近在做 -->
+    <section class="section" id="now">
+      <div class="section__head reveal">
+        <span class="section__label">02 — 最近在做</span>
+        <h2 class="section__title">手头正在忙的事</h2>
+        <p class="section__sub">边学边做，把想法一点点变成能跑起来的东西。</p>
+      </div>
+
+      <div class="timeline">
+        <article class="tl-item reveal">
+          <div class="tl-card">
+            <div class="tl-head">
+              <h3 class="tl-title">学 AI 开发</h3>
+              <span class="status-tag status-tag--doing">进行中</span>
+            </div>
+            <p class="tl-desc">把 AI 用进自己的项目里，边学边做，从能用的小工具开始。</p>
+          </div>
+        </article>
+        <article class="tl-item reveal">
+          <div class="tl-card">
+            <div class="tl-head">
+              <h3 class="tl-title">做游戏 · 设计游戏框架</h3>
+              <span class="status-tag status-tag--long">长期</span>
+            </div>
+            <p class="tl-desc">喜欢自己设计游戏框架和内容，也会做一些小工具玩。</p>
+          </div>
+        </article>
+        <article class="tl-item reveal">
+          <div class="tl-card">
+            <div class="tl-head">
+              <h3 class="tl-title">上手 Godot 引擎</h3>
+              <span class="status-tag status-tag--new">刚开始</span>
+            </div>
+            <p class="tl-desc">准备用 Godot 做一些休闲治愈风格的小游戏，做出来公开给朋友们玩。</p>
+          </div>
+        </article>
+        <article class="tl-item reveal">
+          <div class="tl-card">
+            <div class="tl-head">
+              <h3 class="tl-title">物理沙盒小实验</h3>
+              <span class="status-tag status-tag--long">长期</span>
+            </div>
+            <p class="tl-desc">和 AI 一起折腾有意思的程序，比如用物理沙盒去模拟乒乓球。</p>
+          </div>
+        </article>
+        <article class="tl-item reveal">
+          <div class="tl-card">
+            <div class="tl-head">
+              <h3 class="tl-title">整理作品集 · 这个主页</h3>
+              <span class="status-tag status-tag--doing">进行中</span>
+            </div>
+            <p class="tl-desc">把做过的东西慢慢沉淀下来，这个个人主页就是第一步。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- 作品 -->
     <section class="section" id="works">
       <div class="section__head reveal">
-        <span class="section__label">02 — 精选作品</span>
+        <span class="section__label">03 — 精选作品</span>
         <h2 class="section__title">做过的一些东西</h2>
         <p class="section__sub">一些自己动手做的开源小工具和作品。</p>
       </div>
@@ -243,7 +324,7 @@
     <!-- 数字分身 -->
     <section class="section" id="twin">
       <div class="section__head reveal">
-        <span class="section__label">03 — 数字分身</span>
+        <span class="section__label">04 — 数字分身</span>
         <h2 class="section__title">有任何问题，直接问我</h2>
         <p class="section__sub">这是根据我的资料生成的对话分身，在学什么、做什么游戏、平时玩什么，都可以随便问。</p>
       </div>
@@ -289,7 +370,7 @@
   <!-- 页脚 / 联系 -->
   <footer class="footer" id="contact">
     <div class="footer__inner reveal">
-      <span class="section__label">04 — 联系</span>
+      <span class="section__label">05 — 联系</span>
       <h2 class="footer__title">想聊点什么，随时找我</h2>
       <p class="footer__sub">无论是合作、交流，还是单纯想认识一下，都欢迎。</p>
 
@@ -304,6 +385,11 @@
       <p class="footer__meta">© <span id="year"></span> Mr. 赖 · 用 AI 做出来的第一个作品</p>
     </div>
   </footer>
+
+  <!-- 回到顶部 -->
+  <button class="to-top" id="toTop" type="button" aria-label="回到顶部">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5M6 11l6-6 6 6"/></svg>
+  </button>
 
   <script src="assets/app.js"></script>
 </body>
