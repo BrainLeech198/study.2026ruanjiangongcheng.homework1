@@ -4,9 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#05060a" />
-  <title>BrainLeech · 个人主页</title>
-  <meta name="description" content="BrainLeech 的个人主页 —— 一个正在学习用 AI 做产品的独立开发者。欢迎和我的数字分身聊聊。" />
+  <title>Mr. 赖 · 个人主页</title>
+  <meta name="description" content="Mr. 赖 的个人主页 —— 正在学习 AI 开发，也爱自己动手做游戏和小工具。欢迎和我的数字分身聊聊。" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+  <!-- 分享卡片（微信 / QQ / Twitter 等） -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Mr. 赖" />
+  <meta property="og:title" content="Mr. 赖 · 个人主页" />
+  <meta property="og:description" content="正在学习 AI 开发，也爱自己动手做游戏和小工具。欢迎和我的数字分身聊聊。" />
+  <meta property="og:url" content="https://brainleech198.github.io/study.2026ruanjiangongcheng.homework1/" />
+  <meta property="og:image" content="https://brainleech198.github.io/study.2026ruanjiangongcheng.homework1/assets/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Mr. 赖 · 个人主页" />
+  <meta name="twitter:description" content="正在学习 AI 开发，也爱自己动手做游戏和小工具。" />
+  <meta name="twitter:image" content="https://brainleech198.github.io/study.2026ruanjiangongcheng.homework1/assets/og.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,8 +46,8 @@
   <!-- 顶部导航 -->
   <header class="nav" id="nav">
     <a class="nav__logo" href="#home" aria-label="返回首页">
-      <span class="nav__logo-mark">BL</span>
-      <span class="nav__logo-text">BrainLeech</span>
+      <span class="nav__logo-mark">赖</span>
+      <span class="nav__logo-text">Mr. 赖</span>
     </a>
     <nav class="nav__links" aria-label="主导航">
       <a href="#about" data-nav>关于</a>
@@ -42,7 +56,19 @@
       <a href="#contact" data-nav>联系</a>
     </nav>
     <a class="btn btn--ghost nav__cta" href="#twin">和我聊聊</a>
+    <button class="nav__toggle" id="navToggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="navMenu">
+      <span></span><span></span><span></span>
+    </button>
   </header>
+
+  <!-- 移动端菜单 -->
+  <div class="nav__menu" id="navMenu">
+    <a href="#about">关于我</a>
+    <a href="#works">作品</a>
+    <a href="#twin">数字分身</a>
+    <a href="#contact">联系</a>
+    <a class="btn btn--primary" href="#twin">和我聊聊</a>
+  </div>
 
   <main>
     <!-- 首屏 -->
@@ -55,11 +81,11 @@
 
         <div class="hero__avatar">
           <div class="hero__avatar-ring"></div>
-          <img src="assets/avatar.jpg" alt="BrainLeech 的头像" width="160" height="160" />
+          <img src="assets/avatar.jpg" alt="Mr. 赖 的头像" width="160" height="160" />
         </div>
 
         <h1 class="hero__name">
-          <span class="grad-text">BrainLeech</span>
+          <span class="grad-text">Mr. 赖</span>
         </h1>
         <p class="hero__tagline">正在学习 AI 开发，也爱自己动手做游戏和小工具的独立开发者</p>
         <p class="hero__desc">
@@ -103,7 +129,7 @@
       <div class="about">
         <div class="about__bio reveal">
           <p>
-            我是 <strong>BrainLeech</strong>，现在主要在做两件事：学 AI 开发，还有自己动手做游戏和小工具。
+            我是 <strong>Mr. 赖</strong>，现在主要在做两件事：学 AI 开发，还有自己动手做游戏和小工具。
           </p>
           <p>
             平时喜欢开发游戏、设计游戏框架和内容；业余时间喜欢打乒乓球、打 CS，或者和 AI 一起设计点有意思的程序
@@ -228,7 +254,7 @@
             <img src="assets/avatar.jpg" alt="" width="56" height="56" />
             <span class="status-dot status-dot--solid"></span>
           </div>
-          <h3 class="twin__name">BrainLeech 的数字分身</h3>
+          <h3 class="twin__name">Mr. 赖 的数字分身</h3>
           <p class="twin__hint">挑一个开始，或者自己输入问题：</p>
           <div class="twin__chips" id="chips"></div>
           <p class="twin__note">
@@ -275,7 +301,7 @@
         <a class="btn btn--ghost" href="https://gitee.com/Mr_brainleech" target="_blank" rel="noopener">Gitee</a>
       </div>
 
-      <p class="footer__meta">© <span id="year"></span> BrainLeech · 用 AI 做出来的第一个作品</p>
+      <p class="footer__meta">© <span id="year"></span> Mr. 赖 · 用 AI 做出来的第一个作品</p>
     </div>
   </footer>
 

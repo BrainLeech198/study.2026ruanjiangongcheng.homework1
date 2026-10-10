@@ -1,5 +1,5 @@
 /* =========================================================
-   BrainLeech · 个人主页
+   Mr. 赖 · 个人主页
    交互脚本 + 数字分身逻辑
    ========================================================= */
 
@@ -7,7 +7,7 @@
    1. 数字分身资料（想改内容，只改这里就行）
    --------------------------------------------------------- */
 const TWIN_PROFILE = {
-  name: "BrainLeech",
+  name: "Mr. 赖",
   identity: "正在学习 AI 开发的学生",
   doing: "学 AI 开发，做游戏和小工具，最近准备上手 Godot",
   skills: "AI 开发、游戏框架与内容设计、写小工具",
@@ -144,6 +144,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 20);
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
+
+  /* --- 移动端菜单 --- */
+  const navToggle = $("#navToggle");
+  const navMenu = $("#navMenu");
+  if (navToggle && navMenu) {
+    const setMenu = (open) => {
+      navMenu.classList.toggle("is-open", open);
+      navToggle.classList.toggle("is-open", open);
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      navToggle.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+    };
+    navToggle.addEventListener("click", () => setMenu(!navMenu.classList.contains("is-open")));
+    navMenu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setMenu(false)));
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 880) setMenu(false);
+    });
+  }
 
   /* --- 导航当前区块高亮 --- */
   const navLinks = $$(".nav__links a[data-nav]");

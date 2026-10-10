@@ -22,15 +22,18 @@
 
 ```
 作业1/
-├─ docs/                 # 静态网页（GitHub Pages 发布目录）
-│  ├─ index.html         # 主页：首屏 / 关于我 / 作品 / 数字分身 / 联系
-│  ├─ .nojekyll          # 告诉 GitHub Pages 别用 Jekyll
+├─ docs/                     # 静态网页（GitHub Pages 发布目录）
+│  ├─ index.html             # 主页：首屏 / 关于我 / 作品 / 数字分身 / 联系
+│  ├─ .nojekyll              # 告诉 GitHub Pages 别用 Jekyll
 │  └─ assets/
-│     ├─ styles.css      # 深色科技感样式
-│     ├─ app.js          # 交互 + 数字分身逻辑
-│     ├─ avatar.jpg      # 头像（替换成你自己的照片即可）
-│     └─ favicon.svg     # 站点图标
+│     ├─ styles.css          # 深色科技感样式
+│     ├─ app.js              # 交互 + 数字分身逻辑
+│     ├─ avatar.jpg          # 头像（替换成你自己的照片即可）
+│     ├─ og.jpg              # 分享卡片图（1200×630，微信/QQ 分享用）
+│     └─ favicon.svg         # 站点图标
+├─ 作业1-过程记录.md         # 第 0–2 章过程记录（验收清单 / 优化清单 / 截图清单）
 ├─ README.md
+├─ .gitattributes
 └─ .gitignore
 ```
 
@@ -54,7 +57,7 @@ python -m http.server 8080
 
 占位信息集中在几处，替换即可：
 
-1. **主页文案**：编辑 `docs/index.html`，搜索 `BrainLeech`、`brainleech198@foxmail.com`、占位介绍文字。
+1. **主页文案**：编辑 `docs/index.html`，搜索 `Mr. 赖`、`brainleech198@foxmail.com`、介绍文字。
 2. **头像**：把你的照片覆盖 `docs/assets/avatar.jpg` 即可（推荐 JPG；若用 PNG，记得同步改 `index.html` 里的扩展名）。
 3. **数字分身内容**：编辑 `docs/assets/app.js` 顶部的 `TWIN_PROFILE`、`TWIN_QA`、`QUICK_CHIPS`
    三个常量，就能改人设、改问答、改快捷问题。

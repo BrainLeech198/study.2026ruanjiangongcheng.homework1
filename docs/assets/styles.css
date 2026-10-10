@@ -1,5 +1,5 @@
 /* =========================================================
-   BrainLeech · 个人主页
+   Mr. 赖 · 个人主页
    深色科技感设计系统
    ========================================================= */
 
@@ -249,6 +249,62 @@ input { font: inherit; }
 .nav__links a:hover, .nav__links a.is-active { color: var(--text); }
 .nav__links a:hover::after, .nav__links a.is-active::after { width: 100%; }
 .nav__cta { padding: 10px 20px; font-size: 14px; }
+
+/* 移动端汉堡按钮 */
+.nav__toggle {
+  display: none;
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.25s, border-color 0.25s;
+}
+.nav__toggle:hover { background: var(--surface-2); border-color: var(--border-strong); }
+.nav__toggle span {
+  display: block;
+  width: 18px; height: 2px;
+  border-radius: 2px;
+  background: var(--text);
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+.nav__toggle.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__toggle.is-open span:nth-child(2) { opacity: 0; }
+.nav__toggle.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* 移动端下拉菜单 */
+.nav__menu {
+  position: fixed;
+  top: var(--nav-h);
+  left: 0; right: 0;
+  z-index: 49;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 22px 22px;
+  background: rgba(6, 8, 14, 0.94);
+  backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+  transform: translateY(-14px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.nav__menu.is-open { opacity: 1; transform: none; pointer-events: auto; }
+.nav__menu a {
+  padding: 13px 6px;
+  font-size: 16px;
+  color: var(--text-soft);
+  border-bottom: 1px solid var(--border);
+  transition: color 0.25s, padding-left 0.25s var(--ease);
+}
+.nav__menu a:hover { color: #fff; padding-left: 12px; }
+.nav__menu a.btn { border-bottom: none; }
+.nav__menu a.btn:hover { padding-left: 0; }
+.nav__menu a.btn { color: #05060a; justify-content: center; margin-top: 10px; }
 
 /* ---------- 首屏 ---------- */
 .hero {
@@ -572,8 +628,14 @@ input { font: inherit; }
 .reveal.is-visible { opacity: 1; transform: none; }
 
 /* ---------- 响应式 ---------- */
+@media (min-width: 881px) {
+  .nav__menu { display: none; }
+}
+
 @media (max-width: 880px) {
   .nav__links { display: none; }
+  .nav__cta { display: none; }
+  .nav__toggle { display: flex; }
   .about { grid-template-columns: 1fr; gap: 28px; }
   .works { grid-template-columns: 1fr; }
   .twin { grid-template-columns: 1fr; }
