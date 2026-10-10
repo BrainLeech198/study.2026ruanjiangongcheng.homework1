@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="BrainLeech 头像占位">
+  <defs>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.5" stop-color="#5b8cff"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="mono" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dff3ff"/>
+      <stop offset="0.55" stop-color="#9fc2ff"/>
+      <stop offset="1" stop-color="#d9c9ff"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="0.5" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#141a2e"/>
+      <stop offset="1" stop-color="#07080f"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#5b8cff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#5b8cff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <circle cx="100" cy="100" r="100" fill="url(#bg)"/>
+  <circle cx="100" cy="100" r="100" fill="url(#glow)"/>
+
+  <!-- 装饰性同心环 -->
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#ffffff" stroke-opacity="0.06" stroke-width="1"/>
+  <circle cx="100" cy="100" r="64" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+
+  <!-- 断续外环 -->
+  <circle cx="100" cy="100" r="88" fill="none" stroke="url(#ring)" stroke-width="2.5"
+          stroke-linecap="round" stroke-dasharray="120 430" transform="rotate(28 100 100)"/>
+  <circle cx="100" cy="100" r="88" fill="none" stroke="url(#ring)" stroke-width="2"
+          stroke-linecap="round" stroke-dasharray="70 470" opacity="0.7" transform="rotate(190 100 100)"/>
+
+  <!-- 菱形节点 -->
+  <path d="M100 20 L105 27 L100 34 L95 27 Z" fill="#22d3ee"/>
+  <path d="M180 100 L173 105 L166 100 L173 95 Z" fill="#a855f7" opacity="0.9"/>
+
+  <!-- 中央字母 -->
+  <text x="100" y="120" text-anchor="middle"
+        font-family="Sora, Segoe UI, Arial, sans-serif" font-size="66" font-weight="800"
+        fill="url(#mono)" letter-spacing="1">BL</text>
+</svg>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05060a" />
+  <title>BrainLeech · 个人主页</title>
+  <meta name="description" content="BrainLeech 的个人主页 —— 一个正在学习用 AI 做产品的独立开发者。欢迎和我的数字分身聊聊。" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <!-- 背景特效层 -->
+  <div class="bg-fx" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="aurora aurora--1"></div>
+    <div class="aurora aurora--2"></div>
+    <div class="aurora aurora--3"></div>
+    <div class="bg-noise"></div>
+  </div>
+
+  <!-- 跟随鼠标的光斑 -->
+  <div class="spotlight" id="spotlight" aria-hidden="true"></div>
+
+  <!-- 顶部导航 -->
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="#home" aria-label="返回首页">
+      <span class="nav__logo-mark">BL</span>
+      <span class="nav__logo-text">BrainLeech</span>
+    </a>
+    <nav class="nav__links" aria-label="主导航">
+      <a href="#about" data-nav>关于</a>
+      <a href="#works" data-nav>作品</a>
+      <a href="#twin" data-nav>数字分身</a>
+      <a href="#contact" data-nav>联系</a>
+    </nav>
+    <a class="btn btn--ghost nav__cta" href="#twin">和我聊聊</a>
+  </header>
+
+  <main>
+    <!-- 首屏 -->
+    <section class="hero" id="home">
+      <div class="hero__inner reveal">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          在线 · 欢迎来聊
+        </div>
+
+        <div class="hero__avatar">
+          <div class="hero__avatar-ring"></div>
+          <img src="assets/avatar.svg" alt="BrainLeech 的头像" width="160" height="160" />
+        </div>
+
+        <h1 class="hero__name">
+          <span class="grad-text">BrainLeech</span>
+        </h1>
+        <p class="hero__tagline">一个正在学习用 AI 做产品的独立开发者</p>
+        <p class="hero__desc">
+          喜欢把复杂的问题讲成人话，用最少的资源，把想法变成一个能跑、能看、能用的作品。
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#twin">
+            <span>和我的数字分身聊聊</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#works">查看作品</a>
+        </div>
+
+        <div class="hero__social">
+          <a href="https://github.com/BrainLeech198" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 2.5-.34c.85 0 1.71.12 2.5.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.6.69.49A10.02 10.02 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+          </a>
+          <a href="https://gitee.com/Mr_brainleech" target="_blank" rel="noopener" aria-label="Gitee">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M11.98 2C6.5 2 2 6.5 2 12s4.5 10 10 10c5.3 0 9.66-4.1 9.98-9.3.02-.4-.3-.7-.7-.7h-7.1c-.4 0-.7.3-.7.7v1.9c0 .4.3.7.7.7h3.4c-.6 1.9-2.4 3.3-4.6 3.3-2.7 0-4.9-2.2-4.9-4.9s2.2-4.9 4.9-4.9c1.2 0 2.3.4 3.2 1.2.3.3.8.3 1-.1l1.4-1.4c.3-.3.2-.8-.1-1.1A8 8 0 0 0 11.98 2Z"/></svg>
+          </a>
+          <a href="mailto:hello@example.com" aria-label="邮箱">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 6.5h18v11H3z"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="m3.5 7 8.5 6 8.5-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <a class="scroll-hint" href="#about" aria-label="向下滚动">
+        <span class="scroll-hint__mouse"></span>
+      </a>
+    </section>
+
+    <!-- 关于我 -->
+    <section class="section" id="about">
+      <div class="section__head reveal">
+        <span class="section__label">01 — 关于我</span>
+        <h2 class="section__title">先认识一下我</h2>
+      </div>
+
+      <div class="about">
+        <div class="about__bio reveal">
+          <p>
+            我是 <strong>BrainLeech</strong>，现在主要在做两件事：把 AI 用起来，把自己做过的东西整理出来。
+          </p>
+          <p>
+            比起一口气学完所有概念，我更相信「先做出来，再逐步理解」——先把一个能预览、能用的版本拉起来，
+            再一点点改得更像自己想要的样子。这个主页本身，就是这条路上的第一个作品。
+          </p>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card reveal">
+            <span class="info-card__k">身份</span>
+            <span class="info-card__v">大学生 · 独立学习者</span>
+          </article>
+          <article class="info-card reveal">
+            <span class="info-card__k">专业 / 方向</span>
+            <span class="info-card__v">计算机 · AI 应用</span>
+          </article>
+          <article class="info-card reveal">
+            <span class="info-card__k">现在在做</span>
+            <span class="info-card__v">学习制作 AI 产品，整理作品集</span>
+          </article>
+          <article class="info-card reveal">
+            <span class="info-card__k">兴趣</span>
+            <span class="info-card__v">AI 应用 · 编程 · 设计</span>
+          </article>
+          <article class="info-card reveal">
+            <span class="info-card__k">记忆点</span>
+            <span class="info-card__v">喜欢把复杂问题讲成人话</span>
+          </article>
+          <article class="info-card reveal">
+            <span class="info-card__k">坐标</span>
+            <span class="info-card__v">中国 · 线上</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="tags reveal">
+        <span>Prompt 工程</span>
+        <span>前端</span>
+        <span>Git</span>
+        <span>AI Agent</span>
+        <span>产品思维</span>
+        <span>内容表达</span>
+        <span>快速原型</span>
+      </div>
+    </section>
+
+    <!-- 作品 -->
+    <section class="section" id="works">
+      <div class="section__head reveal">
+        <span class="section__label">02 — 精选作品</span>
+        <h2 class="section__title">做过的一些东西</h2>
+        <p class="section__sub">这里是占位内容，之后替换成你真实的作品即可。</p>
+      </div>
+
+      <div class="works">
+        <article class="work-card reveal">
+          <div class="work-card__glow"></div>
+          <div class="work-card__top">
+            <span class="work-card__badge">Web</span>
+            <span class="work-card__year">2026</span>
+          </div>
+          <h3>个人主页 + 数字分身</h3>
+          <p>用 AI 从零生成的第一个作品，从平台原型到本地、再到上线，走完一次完整闭环。</p>
+          <div class="work-card__tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+        </article>
+
+        <article class="work-card reveal">
+          <div class="work-card__glow"></div>
+          <div class="work-card__top">
+            <span class="work-card__badge">AI</span>
+            <span class="work-card__year">2026</span>
+          </div>
+          <h3>待补充的作品</h3>
+          <p>把你的第二个作品放这里，写一两句它解决了什么问题、你用了什么方法。</p>
+          <div class="work-card__tags"><span>待填</span></div>
+        </article>
+
+        <article class="work-card reveal">
+          <div class="work-card__glow"></div>
+          <div class="work-card__top">
+            <span class="work-card__badge">Notes</span>
+            <span class="work-card__year">2026</span>
+          </div>
+          <h3>学习笔记 / 实验</h3>
+          <p>记录你在学习过程中的小实验、踩过的坑和想明白的问题。</p>
+          <div class="work-card__tags"><span>待填</span></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 数字分身 -->
+    <section class="section" id="twin">
+      <div class="section__head reveal">
+        <span class="section__label">03 — 数字分身</span>
+        <h2 class="section__title">有任何问题，直接问我</h2>
+        <p class="section__sub">这是根据我的资料生成的对话分身，年龄、爱好、在做什么，都可以随便问。</p>
+      </div>
+
+      <div class="twin reveal">
+        <aside class="twin__side">
+          <div class="twin__avatar">
+            <img src="assets/avatar.svg" alt="" width="56" height="56" />
+            <span class="status-dot status-dot--solid"></span>
+          </div>
+          <h3 class="twin__name">BrainLeech 的数字分身</h3>
+          <p class="twin__hint">挑一个开始，或者自己输入问题：</p>
+          <div class="twin__chips" id="chips"></div>
+          <p class="twin__note">
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 8v5m0 3h.01M12 3l9 16H3z"/></svg>
+            当前为预设问答演示，已预留真实大模型接口，后续可一键接入。
+          </p>
+        </aside>
+
+        <div class="chat">
+          <div class="chat__header">
+            <span class="chat__title">对话窗口</span>
+            <span class="chat__mode">预设模式</span>
+          </div>
+          <div class="chat__body" id="chatBody" aria-live="polite"></div>
+          <form class="chat__input" id="chatForm">
+            <input
+              id="chatText"
+              type="text"
+              autocomplete="off"
+              placeholder="输入你的问题，例如：你现在在做什么？"
+              aria-label="输入问题"
+            />
+            <button type="submit" aria-label="发送">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 12l16-8-6 8 6 8z"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 / 联系 -->
+  <footer class="footer" id="contact">
+    <div class="footer__inner reveal">
+      <span class="section__label">04 — 联系</span>
+      <h2 class="footer__title">想聊点什么，随时找我</h2>
+      <p class="footer__sub">无论是合作、交流，还是单纯想认识一下，都欢迎。</p>
+
+      <div class="footer__actions">
+        <a class="btn btn--primary" href="mailto:hello@example.com">
+          <span>hello@example.com</span>
+        </a>
+        <a class="btn btn--ghost" href="https://github.com/BrainLeech198" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn--ghost" href="https://gitee.com/Mr_brainleech" target="_blank" rel="noopener">Gitee</a>
+      </div>
+
+      <p class="footer__meta">© <span id="year"></span> BrainLeech · 用 AI 做出来的第一个作品</p>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
