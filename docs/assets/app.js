@@ -319,24 +319,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* --- 首屏打字机 --- */
+  /* 不随 prefers-reduced-motion 关闭：省电/无障碍设置会打开该媒体查询，
+     若在此降级成静态词，打字效果在这些浏览器里就不显示了。 */
   const typer = $("#typer");
   if (typer) {
     const words = ["AI 开发", "游戏开发", "独立小工具", "物理沙盒实验", "Godot 游戏"];
-    if (reduceMotion) {
-      typer.textContent = words[0];
-    } else {
-      let wi = 0, ci = 0, deleting = false;
-      const tick = () => {
-        const w = words[wi];
-        ci += deleting ? -1 : 1;
-        typer.textContent = w.slice(0, ci);
-        let delay = deleting ? 45 : 95;
-        if (!deleting && ci === w.length) { deleting = true; delay = 1400; }
-        else if (deleting && ci === 0) { deleting = false; wi = (wi + 1) % words.length; delay = 350; }
-        setTimeout(tick, delay);
-      };
-      tick();
-    }
+    let wi = 0, ci = 0, deleting = false;
+    const tick = () => {
+      const w = words[wi];
+      ci += deleting ? -1 : 1;
+      typer.textContent = w.slice(0, ci);
+      let delay = deleting ? 45 : 95;
+      if (!deleting && ci === w.length) { deleting = true; delay = 1400; }
+      else if (deleting && ci === 0) { deleting = false; wi = (wi + 1) % words.length; delay = 350; }
+      setTimeout(tick, delay);
+    };
+    tick();
   }
 
   /* --- 关键词跑马灯：复制一份实现无缝滚动 --- */
