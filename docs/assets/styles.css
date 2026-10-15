@@ -1171,6 +1171,64 @@ input { font: inherit; }
   margin-bottom: 6px;
 }
 
+/* =========================================================
+   简洁模式（默认）：藏起炫技的部分
+   body.calm-off = 完整版
+   ========================================================= */
+body:not(.calm-off) #play { display: none; }
+body:not(.calm-off) .nav__links a[href="#play"],
+body:not(.calm-off) .nav__links a[href="#contact"],
+body:not(.calm-off) .nav__menu a[href="#play"],
+body:not(.calm-off) .nav__menu a[href="#contact"] { display: none; }
+body:not(.calm-off) .marquee { display: none; }
+body:not(.calm-off) .spotlight { display: none; }
+body:not(.calm-off) .hero__avatar-ring { animation: none; opacity: 0.35; }
+body:not(.calm-off) .bg-grid { animation: none; }
+body:not(.calm-off) .aurora { animation: none; }
+body:not(.calm-off) .work-card.is-tilt { transform: none !important; transition: border-color 0.35s; }
+body:not(.calm-off) .work-card__cover { cursor: default; }
+body:not(.calm-off) .work-card__cover-hint { display: none; }
+body:not(.calm-off) .typer__caret { display: none; }
+
+.footer--mini {
+  padding: var(--sp-8) 0 var(--sp-6);
+  text-align: center;
+}
+.footer--mini .footer__meta {
+  margin: 0;
+  font-size: var(--text-caption);
+  color: var(--text-dim);
+}
+.footer__toggle {
+  color: var(--text-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--dur);
+}
+.footer__toggle:hover { color: var(--accent-2); }
+
+/* --- 外链占位气泡 --- */
+.ph-bubble {
+  position: absolute;
+  z-index: 120;
+  max-width: 300px;
+  padding: 11px 15px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  background: rgba(14, 18, 28, 0.95);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.24s var(--ease), transform 0.24s var(--ease);
+  pointer-events: none;
+}
+.ph-bubble.is-show { opacity: 1; transform: none; }
+
 /* ---------- 响应式 ---------- */
 @media (min-width: 881px) {
   .nav__menu { display: none; }

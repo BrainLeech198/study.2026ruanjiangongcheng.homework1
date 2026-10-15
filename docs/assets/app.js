@@ -11,7 +11,7 @@ const TWIN_PROFILE = {
   identity: "正在学习 AI 开发的学生",
   doing: "学 AI 开发，做游戏和小工具，最近准备上手 Godot",
   skills: "AI 开发、游戏框架与内容设计、写小工具",
-  contact: "可以发邮件到 brainleech198@foxmail.com，或者去 GitHub / Gitee 找我",
+  contact: "联系方式暂不公开在网上，可以私下找我要",
 };
 
 /* 预设问答：matches 里任意关键词命中即算匹配 */
@@ -139,6 +139,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const yearEl = $("#year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* ---------------------------------------------------------
+     显示模式：默认「简洁」，页底链接可切到「完整版」
+     body.calm-off = 完整版（显示游戏区 + 动效）
+     --------------------------------------------------------- */
+  const MODE_KEY = "homework1-mode";
+  const body = document.body;
+  const modeToggle = $("#modeToggle");
+
+  function applyMode(full, persist) {
+    body.classList.toggle("calm-off", full);
+    if (modeToggle) modeToggle.textContent = full ? "切回简洁版" : "开启完整版";
+    if (persist) localStorage.setItem(MODE_KEY, full ? "full" : "calm");
+  }
+  applyMode(localStorage.getItem(MODE_KEY) === "full", false);
+  if (modeToggle) {
+    modeToggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      applyMode(!body.classList.contains("calm-off"), true);
+    });
+  }
+  const isFull = () => body.classList.contains("calm-off");
+
   /* --- 导航滚动状态 --- */
   const nav = $("#nav");
   const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 20);
@@ -203,9 +225,9 @@ document.addEventListener("DOMContentLoaded", () => {
     reveals.forEach((el) => el.classList.add("is-visible"));
   }
 
-  /* --- 鼠标光斑 --- */
+  /* --- 鼠标光斑（仅完整版） --- */
   const spot = $("#spotlight");
-  if (spot && window.matchMedia("(pointer:fine)").matches) {
+  if (spot && isFull() && window.matchMedia("(pointer:fine)").matches) {
     let raf = null;
     window.addEventListener("pointermove", (e) => {
       spot.style.opacity = "1";
@@ -318,31 +340,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  /* --- 首屏打字机 --- */
-  /* 不随 prefers-reduced-motion 关闭：省电/无障碍设置会打开该媒体查询，
-     若在此降级成静态词，打字效果在这些浏览器里就不显示了。 */
+  /* --- 首屏打字机（仅完整版；简洁模式显示静态词） --- */
   const typer = $("#typer");
   if (typer) {
     const words = ["AI 开发", "游戏开发", "独立小工具", "物理沙盒实验", "Godot 游戏"];
-    let wi = 0, ci = 0, deleting = false;
-    const tick = () => {
-      const w = words[wi];
-      ci += deleting ? -1 : 1;
-      typer.textContent = w.slice(0, ci);
-      let delay = deleting ? 45 : 95;
-      if (!deleting && ci === w.length) { deleting = true; delay = 1400; }
-      else if (deleting && ci === 0) { deleting = false; wi = (wi + 1) % words.length; delay = 350; }
-      setTimeout(tick, delay);
-    };
-    tick();
+    if (isFull()) {
+      let wi = 0, ci = 0, deleting = false;
+      const tick = () => {
+        const w = words[wi];
+        ci += deleting ? -1 : 1;
+        typer.textContent = w.slice(0, ci);
+        let delay = deleting ? 45 : 95;
+        if (!deleting && ci === w.length) { deleting = true; delay = 1400; }
+        else if (deleting && ci === 0) { deleting = false; wi = (wi + 1) % words.length; delay = 350; }
+        setTimeout(tick, delay);
+      };
+      tick();
+    } else {
+      typer.textContent = words[0];
+    }
   }
 
-  /* --- 关键词跑马灯：复制一份实现无缝滚动 --- */
+  /* --- 关键词跑马灯（仅完整版）：复制一份实现无缝滚动 --- */
   const marqueeTrack = $("#marqueeTrack");
-  if (marqueeTrack) marqueeTrack.innerHTML += marqueeTrack.innerHTML;
+  if (marqueeTrack && isFull()) marqueeTrack.innerHTML += marqueeTrack.innerHTML;
 
-  /* --- 作品卡片：跟随光标高光 + 3D 倾斜 --- */
-  if (window.matchMedia("(pointer:fine)").matches && !reduceMotion) {
+  /* --- 作品卡片：跟随光标高光 + 3D 倾斜（仅完整版） --- */
+  if (isFull() && window.matchMedia("(pointer:fine)").matches && !reduceMotion) {
     $$(".work-card").forEach((card) => {
       card.classList.add("is-tilt");
       let raf = null;
@@ -415,16 +439,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.overflow = "";
   }
 
-  $$("[data-lightbox]").forEach((el) => {
-    const idx = Number(el.getAttribute("data-lightbox"));
-    el.addEventListener("click", () => openLightbox(idx));
-    el.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openLightbox(idx);
-      }
+  if (isFull()) {
+    $$("[data-lightbox]").forEach((el) => {
+      const idx = Number(el.getAttribute("data-lightbox"));
+      el.addEventListener("click", () => openLightbox(idx));
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openLightbox(idx);
+        }
+      });
     });
-  });
+  }
   if (lightbox) {
     lightbox.addEventListener("click", (e) => {
       if (e.target === lightbox) closeLightbox();
@@ -672,9 +698,9 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       {
         q: "想联系他，最直接的方式是？",
-        opts: ["发邮件到 brainleech198@foxmail.com", "去微博私信", "打 114 查号", "在游戏里蹲他"],
+        opts: ["发邮件给他", "去微博私信", "打 114 查号", "在游戏里蹲他"],
         a: 0,
-        note: "邮件最稳；也可以去 GitHub / Gitee 找他。",
+        note: "邮件最稳；具体地址可以私下找他要。",
       },
     ];
 
@@ -740,6 +766,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderQuiz();
   }
+
+  /* ---------------------------------------------------------
+     外链占位气泡：不暴露仓库 / 邮箱地址
+     --------------------------------------------------------- */
+  function showPlaceholder(anchor, text) {
+    document.querySelectorAll(".ph-bubble").forEach((n) => n.remove());
+    const tip = document.createElement("div");
+    tip.className = "ph-bubble";
+    tip.setAttribute("role", "status");
+    tip.textContent = text || "仓库地址暂不公开，欢迎邮件交流";
+    document.body.appendChild(tip);
+    const r = anchor.getBoundingClientRect();
+    const top = r.top + window.scrollY - tip.offsetHeight - 12;
+    tip.style.left = Math.max(12, Math.min(window.innerWidth - tip.offsetWidth - 12, r.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
+    tip.style.top = (top > 0 ? top : r.bottom + window.scrollY + 12) + "px";
+    /* 强制回流后再加类，保证过渡动画能触发 */
+    void tip.offsetWidth;
+    tip.classList.add("is-show");
+    clearTimeout(showPlaceholder._t);
+    showPlaceholder._t = setTimeout(() => {
+      tip.classList.remove("is-show");
+      setTimeout(() => tip.remove(), 260);
+    }, 2600);
+  }
+
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("[data-placeholder]");
+    if (!a) return;
+    e.preventDefault();
+    showPlaceholder(a, a.getAttribute("data-placeholder"));
+  });
 
   /* 暴露给控制台调试用 */
   window.appChat = send;
